@@ -1,0 +1,30 @@
+import processing.serial.*;
+
+Serial mySerial;
+
+String myString = null;
+int nl = 10;
+float myVal;
+
+void setup (){
+  size (200,400);
+  
+  String myPort = "COM10";
+  mySerial = new Serial(this,myPort,9600);
+}
+
+void draw(){
+  while (mySerial.available()>0){
+    myString = mySerial.readStringUntil(nl);
+    if(myString != null){
+      background(0);
+      myVal = float(myString);
+      myVal = myVal/100*height;
+      
+      rectMode(CENTER);
+      rect(width/2, height-(myVal/2), 100, myVal);
+      text(myString, 80, 10); 
+
+    }
+  }
+}
